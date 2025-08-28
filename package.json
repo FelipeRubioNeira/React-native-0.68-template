@@ -15,6 +15,7 @@
     "@react-navigation/native-stack": "^7.3.24",
     "@rneui/base": "^0.0.0-edge.2",
     "@rneui/themed": "^0.0.0-edge.2",
+    "babel-plugin-module-resolver": "^5.0.2",
     "moti": "^0.30.0",
     "react": "19.0.0",
     "react-native": "0.78.0",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { ButtonApp } from '../../components/ButtonApp';
+import { ButtonApp } from '@app/presentation/components/ButtonApp';
 import { HomeScreenProps } from './HomeTypes';
 
 // -------------- HomeScreen Component -------------- //

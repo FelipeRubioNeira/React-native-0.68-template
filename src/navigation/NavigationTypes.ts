@@ -17,10 +17,13 @@ type ProfileScreenNavigationProps = NativeStackScreenProps<
 
 type BaseViewModelProps<NavProps, UseCases = {}> = NavProps & UseCases;
 
+type ScreenWrappersType = Record<SCREEN_NAMES, React.ComponentType<any>>;
+
 // ------------ Exported Types ------------ //
 export type {
   RootStackParamList,
   HomeScreenNavigationProps,
   ProfileScreenNavigationProps,
   BaseViewModelProps,
+  ScreenWrappersType,
 };

@@ -1,5 +1,5 @@
-import { useStore } from '../../globalState';
-import { SCREEN_NAMES } from '../../navigation/ScreenNames';
+import { useStore } from '@app/globalState';
+import { SCREEN_NAMES } from '@app/navigation/ScreenNames';
 import { HomeViewModelProps } from './HomeTypes';
 
 const useHomeViewModel = ({ navigation, getUserUseCase }: HomeViewModelProps) => {
@@ -18,7 +18,7 @@ const useHomeViewModel = ({ navigation, getUserUseCase }: HomeViewModelProps) =>
   };
 
   const incrementCounter = () => {
-    incrementCounterStore(1, 'Incrementar contador');
+    incrementCounterStore(1);
   };
 
   const navigateToProfile = () => {

@@ -1,38 +1,27 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SCREEN_NAMES } from './ScreenNames';
 import { RootStackParamList } from './NavigationTypes';
-import { HomeScreen, ProfileScreen, useHomeViewModel, useProfileViewModel } from '../screens';
-import { GetUserUseCase } from '../useCases/GetUserUseCase';
-import { container } from '../di/DiContainer';
-import { withViewModel } from './FactoryScreen';
+import { SCREEN_NAMES } from './ScreenNames';
+import { screenWrappers } from './ScreensRegistry';
+import Loading from '@presentation/components/Loading';
 
-// ------------------ resolve depencencies ------------------ //
-const getUserUseCase = container.resolve<GetUserUseCase>(GetUserUseCase.name);
-
-// ------------------ Create screen wrappers ------------------ //
-
-const HomeScreenWrapper = withViewModel(HomeScreen, useHomeViewModel, {
-  getUserUseCase,
-});
-
-const ProfileScreenWrapper = withViewModel(ProfileScreen, useProfileViewModel);
-
-// Create the stack navigator
+// ------------------ - Create the stack navigator ------------------ //
 const { Navigator, Screen } = createNativeStackNavigator<RootStackParamList>();
 
-// ------------------ Stack Navigator ------------------ //
+// ------------------ - Stack Navigator ------------------ //
 const StackNavigator = () => {
   return (
-    <Navigator initialRouteName={SCREEN_NAMES.HOME}>
-      <Screen
-        name={SCREEN_NAMES.HOME}
-        options={{ headerShown: false }}
-        component={HomeScreenWrapper}
-      />
+    <Suspense fallback={<Loading />}>
+      <Navigator initialRouteName={SCREEN_NAMES.HOME}>
+        <Screen
+          name={SCREEN_NAMES.HOME}
+          options={{ headerShown: false }}
+          component={screenWrappers[SCREEN_NAMES.HOME]}
+        />
 
-      <Screen name={SCREEN_NAMES.PROFILE} component={ProfileScreenWrapper} />
-    </Navigator>
+        <Screen name={SCREEN_NAMES.PROFILE} component={screenWrappers[SCREEN_NAMES.PROFILE]} />
+      </Navigator>
+    </Suspense>
   );
 };
 

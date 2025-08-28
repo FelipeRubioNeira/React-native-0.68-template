@@ -2,7 +2,7 @@
 // ----------------------- Container for global state management using Zustand ----------------------- //
 // ----------------------------------------------------------------------------------------------------//
 
-import {create} from 'zustand';
+import { create } from 'zustand';
 
 // ---------- Types ---------- //
 
@@ -17,7 +17,7 @@ type State = {
 
 // ---------- Actions ---------- //
 type Actions = {
-  incrementCounter: (number: number, nombre: string) => void;
+  incrementCounter: (number: number) => void;
   updateName: (name: string) => void;
 };
 
@@ -29,8 +29,7 @@ export const useStore = create<State & Actions>(set => ({
     name: '',
   },
   // ----------- actions ----------- //
-  incrementCounter: (number: number) =>
-    set(state => incrementCounter(state, number)),
+  incrementCounter: (number: number) => set(state => incrementCounter(state, number)),
   updateName: (name: string) => set(state => updateName(state, name)),
 }));
 
@@ -50,4 +49,4 @@ const updateName = (state: State, name: string): State => ({
 });
 
 // ---------- Exported Types ---------- //
-export type {Data, State, Actions};
+export type { Data, State, Actions };

@@ -1,4 +1,4 @@
-import { useStore } from '../../globalState';
+import { useStore } from '@app/globalState';
 import { ProfileViewModelProps } from './ProfileTypes';
 
 const useProfileViewModel = ({}: ProfileViewModelProps) => {

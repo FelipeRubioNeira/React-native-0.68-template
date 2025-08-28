@@ -1,5 +1,5 @@
 import { injectable } from 'tsyringe';
-import { UserRepository } from '../repository/UserRepository';
+import { UserRepository } from '@app/repository/UserRepository';
 import { IGetUserUseCase } from './interfaces';
 
 @injectable()

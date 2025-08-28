@@ -1,7 +1,4 @@
-import {
-  BaseViewModelProps,
-  ProfileScreenNavigationProps,
-} from '../../navigation/NavigationTypes';
+import { BaseViewModelProps, ProfileScreenNavigationProps } from '@app/navigation/NavigationTypes';
 import { useProfileViewModel } from './ProfileViewModel';
 
 // props that the ProfileScreen will receive from the ViewModel

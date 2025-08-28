@@ -1,8 +1,5 @@
-import {
-  BaseViewModelProps,
-  HomeScreenNavigationProps,
-} from '../../navigation/NavigationTypes';
-import { GetUserUseCase } from '../../useCases/GetUserUseCase';
+import { BaseViewModelProps, HomeScreenNavigationProps } from '@app/navigation/NavigationTypes';
+import { GetUserUseCase } from '@app/useCases/GetUserUseCase';
 import { useHomeViewModel } from './HomeViewModel';
 
 type HomeScreenProps = ReturnType<typeof useHomeViewModel>;
