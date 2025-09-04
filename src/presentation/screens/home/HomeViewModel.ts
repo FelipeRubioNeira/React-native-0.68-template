@@ -12,9 +12,14 @@ const useHomeViewModel = ({ navigation, getUserUseCase }: HomeViewModelProps) =>
 
   // -------------- methods -------------- //
   const onPressGetUser = async () => {
-    const user = await getUserUseCase.execute(22);
-    updateName(user);
-    getUserUseCase.execute;
+    const result = await getUserUseCase.execute(22);
+    if (!result.ok) {
+      console.log('Mostrar mensaje de error al usuario:', result.error);
+      return;
+    }
+    const user = result.value;
+    updateName(user.name);
+    console.log('Se ha llamado al caso de uso y el nombre es: ', user);
   };
 
   const incrementCounter = () => {

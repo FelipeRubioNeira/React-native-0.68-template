@@ -7,7 +7,7 @@ import { HomeScreenProps } from './HomeTypes';
 
 const HomeScreen = (viewModel: HomeScreenProps) => {
   // -------------- view model -------------- //
-  const { counter, incrementCounter, navigateToProfile } = viewModel;
+  const { counter, incrementCounter, navigateToProfile, onPressGetUser } = viewModel;
 
   // -------------- render -------------- //
   return (
@@ -15,10 +15,12 @@ const HomeScreen = (viewModel: HomeScreenProps) => {
       <Text>Contador: {counter}</Text>
       <ButtonApp title={'Incrementar contador'} onPress={incrementCounter} />
       <ButtonApp title={'Navegar a perfil'} onPress={navigateToProfile} />
+      <ButtonApp title={'Obtener usuario'} onPress={onPressGetUser} />
     </View>
   );
 };
 
+// -------------- styles -------------- //
 const localStyles = StyleSheet.create({
   screenContainer: {
     justifyContent: 'center',

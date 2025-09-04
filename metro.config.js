@@ -9,8 +9,6 @@ const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 
-console.log('[metro.config] usando alias @ ->', path.resolve(__dirname, 'src'));
-
 const config = {
   resolver: {
     alias: {

@@ -1,7 +1,7 @@
 import { container } from '@app/di/DiContainer';
-import { GetUserUseCase } from '@app/useCases/GetUserUseCase';
+import { GetUserUseCase } from '@app/domain/useCases/GetUserUseCase';
 import { withViewModel } from './FactoryScreen';
-import { useHomeViewModel, useProfileViewModel } from '@app/presentation/screens';
+import { useHomeViewModel, useProfileViewModel } from '@presentation/screens';
 import { SCREEN_NAMES } from './ScreenNames';
 import { ScreenWrappersType } from './NavigationTypes';
 import { lazy } from 'react';
@@ -11,10 +11,10 @@ const getUserUseCase = container.resolve<GetUserUseCase>(GetUserUseCase.name);
 
 // 2. Creo los componentes lazily
 const LazyHomeScreen = lazy(() =>
-  import('@app/presentation/screens').then(({ HomeScreen }) => ({ default: HomeScreen })),
+  import('@presentation/screens').then(({ HomeScreen }) => ({ default: HomeScreen })),
 );
 const LazyProfileScreen = lazy(() =>
-  import('@app/presentation/screens').then(({ ProfileScreen }) => ({ default: ProfileScreen })),
+  import('@presentation/screens').then(({ ProfileScreen }) => ({ default: ProfileScreen })),
 );
 
 // 3. Aplico el HOC a los componentes perezosos

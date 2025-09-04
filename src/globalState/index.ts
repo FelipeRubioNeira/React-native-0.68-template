@@ -15,7 +15,7 @@ type State = {
   data: Data;
 };
 
-// ---------- Actions ---------- //
+// ---------- type actions ---------- //
 type Actions = {
   incrementCounter: (number: number) => void;
   updateName: (name: string) => void;

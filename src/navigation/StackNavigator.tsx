@@ -16,10 +16,10 @@ const StackNavigator = () => {
         <Screen
           name={SCREEN_NAMES.HOME}
           options={{ headerShown: false }}
-          component={screenWrappers[SCREEN_NAMES.HOME]}
+          component={screenWrappers.Home}
         />
 
-        <Screen name={SCREEN_NAMES.PROFILE} component={screenWrappers[SCREEN_NAMES.PROFILE]} />
+        <Screen name={SCREEN_NAMES.PROFILE} component={screenWrappers.Profile} />
       </Navigator>
     </Suspense>
   );

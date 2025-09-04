@@ -16,6 +16,8 @@
     "@rneui/base": "^0.0.0-edge.2",
     "@rneui/themed": "^0.0.0-edge.2",
     "babel-plugin-module-resolver": "^5.0.2",
+    "lodash": "^4.17.21",
+    "lodash.times": "^4.3.2",
     "moti": "^0.30.0",
     "react": "19.0.0",
     "react-native": "0.78.0",
