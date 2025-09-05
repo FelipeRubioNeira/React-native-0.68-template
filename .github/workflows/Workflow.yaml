@@ -17,10 +17,10 @@ jobs:
     name: 'Se compila el proyecto'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Subir el código
+        uses: actions/checkout@v5
 
-      - name: Install dependencies
+      - name: Instalar dependencias
         run: npm install
 
       - name: Ejecutar tests
