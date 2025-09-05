@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { container } from 'tsyringe';
 import { GetUserUseCase } from '@app/domain/useCases/GetUserUseCase';
 import { UserRepository } from '@app/data/repository/UserRepository';

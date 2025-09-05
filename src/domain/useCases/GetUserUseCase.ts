@@ -12,7 +12,10 @@ export class GetUserUseCase implements IGetUserUseCase {
     const result = await this.userRepository.getById(userId);
 
     if (!result.ok) {
-      // se puede ejecutar cierta logica asociada al caso de uso
+      return {
+        ok: false,
+        error: 'No se ha podido obtener el usuario',
+      };
     }
 
     return result;

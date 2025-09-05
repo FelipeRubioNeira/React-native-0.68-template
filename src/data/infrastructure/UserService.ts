@@ -12,7 +12,7 @@ class UserService {
 
     try {
       const result: ServiceDTO<UserDTO> = await Promise.resolve({
-        status: 500,
+        status: 200,
         message: 'User fetched successfully',
         payload: {
           id: userId,
