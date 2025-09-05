@@ -3,9 +3,10 @@ name: workflow
 
 # Cuando se debe ejecutar el flujo de trabajo
 on:
-  push:
+  pull_request:
     branches:
       - develop
+      - master
 
 # Permisos para el flujo de trabajo
 permissions:
