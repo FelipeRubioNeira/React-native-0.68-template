@@ -52,7 +52,22 @@ describe('UserRepository', () => {
         expect(isBirthdateValid).toBe(true);
       }
     });
-    it('debería manejar error al obtener usuario por ID', async () => {});
+    it('debería manejar error al obtener usuario por ID', async () => {
+
+        it('debería obtener un usuario por ID', async () => {
+      mockUserService.getById.mockResolvedValue({
+        ok: false,
+        error: 'No se ha podido obtener el usuario',
+      });
+
+      const result = await userRepository.getById(1);
+
+      expect(result.ok).toBe(false);
+      if (result.ok === false){
+        expect(result.error).toBe('No se ha podido obtener el usuario');
+      }
+      
+    });
   });
 
   describe('update', () => {
