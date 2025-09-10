@@ -27,6 +27,7 @@
     "react-native-vector-icons": "^10.2.0",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.10.0",
+    "zod": "^4.1.5",
     "zustand": "^5.0.7"
   },
   "devDependencies": {
