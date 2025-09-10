@@ -21,11 +21,16 @@ jobs:
       - name: Subir el código
         uses: actions/checkout@v5
 
+      - name: Instalar pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
       - name: Instalar dependencias
-        run: npm install
+        run: pnpm install
 
       - name: Ejecutar tests
-        run: npm test
+        run: pnpm test
 
       - name: Chequear errores de TypeScript
-        run: npx tsc --noEmit
+        run: pnpm test
