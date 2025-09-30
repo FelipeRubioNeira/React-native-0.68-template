@@ -4,9 +4,11 @@ name: workflow
 # Cuando se debe ejecutar el flujo de trabajo
 on:
   pull_request:
+    types:
+      - opened
     branches:
-      - develop
-      - master
+      - release
+      - staging
 
 # Permisos para el flujo de trabajo
 permissions:
@@ -15,7 +17,7 @@ permissions:
 # Se definen los trabajos que se ejecutarán
 jobs:
   build:
-    name: 'Se compila el proyecto'
+    name: "Se compila el proyecto"
     runs-on: ubuntu-latest
     steps:
       - name: Subir el código
@@ -34,3 +36,14 @@ jobs:
 
       - name: Chequear errores de TypeScript
         run: pnpm test
+
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send message to Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{"text":"Nuevo Pull Request: ${{ github.event.pull_request.title }} por ${{ github.event.pull_request.user.login }}"}' \
+            $SLACK_WEBHOOK_URL
