@@ -4,9 +4,11 @@ name: workflow
 # Cuando se debe ejecutar el flujo de trabajo
 on:
   pull_request:
+    types:
+      - opened
     branches:
-      - develop
-      - master
+      - release
+      - staging
 
 # Permisos para el flujo de trabajo
 permissions:
@@ -15,7 +17,7 @@ permissions:
 # Se definen los trabajos que se ejecutarán
 jobs:
   build:
-    name: 'Se compila el proyecto'
+    name: "Se compila el proyecto"
     runs-on: ubuntu-latest
     steps:
       - name: Subir el código
@@ -34,3 +36,42 @@ jobs:
 
       - name: Chequear errores de TypeScript
         run: pnpm test
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    steps:
+      - name: Enviar mensaje a Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_USER_ID: ${{ secrets.TECHNICAL_LEADER }} # Agrega este secret con el ID del usuario
+        run: |
+          curl -X POST -H 'Content-Type: application/json' \
+          --data '{
+            "attachments": [
+              {
+                "pretext": "[Importante] Se ha creado una nueva Pull Request: <${{ github.event.pull_request.html_url }}|Revisa aquí>",
+                "color": "#102edbff",
+                "fields": [
+                  {
+                    "title": "Título",
+                    "value": "${{ github.event.pull_request.title }}",
+                    "short": true
+                  },
+                  {
+                    "title": "Autor",
+                    "value": "<@'$SLACK_USER_ID'> (${{
+                      github.event.pull_request.user.login }})",
+                    "short": true
+                  },
+                  {
+                    "title": "Notas",
+                    "value": "${{ github.event.pull_request.body }}",
+                    "short": false
+                  }
+                ]
+              }
+            ]
+          }' \
+          $SLACK_WEBHOOK_URL
