@@ -42,36 +42,25 @@ jobs:
     needs: build
     if: github.event_name == 'pull_request' && github.event.action == 'opened'
     steps:
-      - name: Enviar mensaje a Slack
+      - name: Notificar a Slack del PR
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_USER_ID: ${{ secrets.TECHNICAL_LEADER }} # Agrega este secret con el ID del usuario
+          TECHNICAL_LEADER: ${{ secrets.TECHNICAL_LEADER_ID }}
         run: |
           curl -X POST -H 'Content-Type: application/json' \
-          --data '{
-            "attachments": [
+          --data "{
+            \"attachments\": [
               {
-                "pretext": "[Importante] Se ha creado una nueva Pull Request: <${{ github.event.pull_request.html_url }}|Revisa aquí>",
-                "color": "#102edbff",
-                "fields": [
+                \"pretext\": \"[Importante] ${GITHUB_ACTOR} ha creado un nuevo Pull Request: <${{ github.event.pull_request.html_url }}|Revisa aquí>\",
+                \"color\": \"#137b28ff\",
+                \"fields\": [
                   {
-                    "title": "Título",
-                    "value": "${{ github.event.pull_request.title }}",
-                    "short": true
-                  },
-                  {
-                    "title": "Autor",
-                    "value": "<@'$SLACK_USER_ID'> (${{
-                      github.event.pull_request.user.login }})",
-                    "short": true
-                  },
-                  {
-                    "title": "Notas",
-                    "value": "${{ github.event.pull_request.body }}",
-                    "short": false
+                    \"title\": \"${{ github.event.pull_request.title }}\",
+                    \"value\": \"<@${TECHNICAL_LEADER}> 👀\",
+                    \"short\": false
                   }
                 ]
               }
             ]
-          }' \
+          }" \
           $SLACK_WEBHOOK_URL
