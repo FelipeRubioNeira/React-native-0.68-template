@@ -1,5 +1,5 @@
 # Nombre del flujo de trabajo
-name: Build & Test
+name: workflow
 
 # Cuando se debe ejecutar el flujo de trabajo
 on:
@@ -37,3 +37,32 @@ jobs:
 
       - name: Chequear errores de TypeScript
         run: pnpm test
+
+  # Notificar en Slack cuando se crea un nuevo Pull Request
+  notify:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'
+    steps:
+      - name: Enviar mensaje a Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TECHNICAL_LEADER: ${{ secrets.TECHNICAL_LEADER }}
+        run: |
+          curl -X POST -H 'Content-Type: application/json' \
+          --data '{
+            "attachments": [
+              {
+                "pretext": "[Importante] ${{github.event.pull_request.user.login}} Ha creado un nuevo Pull Request: <${{ github.event.pull_request.html_url }}|Revisa aquí>",
+                "color": "#137b28ff",
+                "fields": [
+                  {
+                    "title": "${{ github.event.pull_request.title }}",
+                    "value": "<@'$TECHNICAL_LEADER'>",
+                    "short": false
+                  },
+                ]
+              }
+            ]
+          }' \
+          $SLACK_WEBHOOK_URL
