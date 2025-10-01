@@ -1,0 +1,39 @@
+# Nombre del flujo de trabajo
+name: Build & Test
+
+# Cuando se debe ejecutar el flujo de trabajo
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - release
+      - staging
+
+# Permisos para el flujo de trabajo
+permissions:
+  contents: write
+
+# Se definen los trabajos que se ejecutarán
+jobs:
+  # Se compila el proyecto y se ejecutan los tests
+  build:
+    name: 'Se compila el proyecto'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Subir el código
+        uses: actions/checkout@v5
+
+      - name: Instalar pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Instalar dependencias
+        run: pnpm install
+
+      - name: Ejecutar tests
+        run: pnpm test
+
+      - name: Chequear errores de TypeScript
+        run: pnpm test
