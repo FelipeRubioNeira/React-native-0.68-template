@@ -1,48 +1,19 @@
-# Nombre del flujo de trabajo
-name: workflow
+name: Notify on Pull Request
 
-# Cuando se debe ejecutar el flujo de trabajo
 on:
-  pull_request:
+  workflow_run:
+    workflows: ['Build & Test']
     types:
-      - opened
-    branches:
-      - release
-      - staging
+      - completed
 
-# Permisos para el flujo de trabajo
 permissions:
-  contents: write
+  contents: read
 
-# Se definen los trabajos que se ejecutarán
 jobs:
-  # Se compila el proyecto y se ejecutan los tests
-  build:
-    name: "Se compila el proyecto"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Subir el código
-        uses: actions/checkout@v5
-
-      - name: Instalar pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
-
-      - name: Instalar dependencias
-        run: pnpm install
-
-      - name: Ejecutar tests
-        run: pnpm test
-
-      - name: Chequear errores de TypeScript
-        run: pnpm test
-
   # Notificar en Slack cuando se crea un nuevo Pull Request
   notify:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'pull_request' && github.event.action == 'opened'
     steps:
       - name: Enviar mensaje a Slack
         env:
