@@ -1,0 +1,18 @@
+{
+  "action": "opened",
+  "number": 123,
+  "pull_request": {
+    "number": 123,
+    "title": "Test PR para validar workflow",
+    "user": {
+      "login": "felipeeduardorubio"
+    },
+    "html_url": "https://github.com/prueba/pull/123",
+    "base": {
+      "ref": "release"
+    },
+    "head": {
+      "ref": "feature/test-branch"
+    }
+  }
+}
