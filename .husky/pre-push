@@ -1,17 +1,10 @@
 #!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-# Hook nativo como respaldo si Husky falla
-echo "🔄 Ejecutando hook pre-push nativo..."
-
-# Verificar si Husky está disponible
-if command -v pnpm >/dev/null 2>&1; then
-    echo "📦 Ejecutando validaciones con pnpm..."
-    pnpm run validate:fast || {
-        echo "❌ Validaciones fallidas. Push cancelado."
-        exit 1
-    }
-else
-    echo "⚠️  pnpm no disponible. Saltando validaciones."
-fi
-
-echo "✅ Hook pre-push nativo completado"
+echo "🚀 Husky: Ejecutando validaciones pre-push..."
+pnpm run validate:fast || {
+    echo "❌ Validaciones fallidas. Push cancelado."
+    echo "💡 Ejecuta 'pnpm run dev:validate' para corregir automáticamente"
+    exit 1
+}
+echo "✅ Validaciones completadas. Continuando push..."
