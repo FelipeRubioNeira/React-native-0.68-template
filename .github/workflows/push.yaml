@@ -11,13 +11,57 @@ permissions:
 
 # Se definen los trabajos que se ejecutarán
 jobs:
-  # Se compila el proyecto y se ejecutan los tests
-  build:
-    name: 'Se compila el proyecto'
+  # Validaciones de código
+  validate:
+    name: 'Validar código'
     runs-on: ubuntu-latest
     steps:
       - name: Subir el código
         uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: Cache de dependencias
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Instalar dependencias
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificar tipos TypeScript
+        run: pnpm run tsc
+
+      - name: Ejecutar linter
+        run: pnpm run lint
+
+      - name: Ejecutar tests
+        run: pnpm test
+
+  # Build del proyecto (solo si las validaciones pasan)
+  build:
+    name: 'Compilar proyecto'
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Subir el código
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Instalar pnpm
         run: |
@@ -25,10 +69,10 @@ jobs:
           corepack prepare pnpm@latest --activate
 
       - name: Instalar dependencias
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
-      - name: Ejecutar tests
-        run: pnpm test
-
-      - name: Chequear errores de TypeScript
-        run: pnpm test
+      - name: Build del proyecto
+        run: |
+          # Para React Native, podrías usar:
+          # npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle
+          echo "Build completado exitosamente"

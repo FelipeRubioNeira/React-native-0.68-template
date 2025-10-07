@@ -2,7 +2,7 @@ import React, { ComponentType } from 'react';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import type { RouteProp } from '@react-navigation/native';
-import type { ParamListBase } from '@react-navigation/routers';
+import type { ParamListBase } from '@react-navigation/native';
 import { BaseViewModelProps } from './NavigationTypes';
 
 /**

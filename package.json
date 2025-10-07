@@ -8,7 +8,18 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "commit": "cz"
+    "commit": "cz",
+    "tsc": "tsc --noEmit",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "ci:local": "act push",
+    "validate:fast": "pnpm run lint && pnpm run test && pnpm run tsc",
+    "dev:validate": "pnpm run lint:fix && pnpm run format && pnpm run tsc && pnpm test",
+    "validate": "pnpm run lint && pnpm run test && pnpm run tsc",
+    "pre-commit": "lint-staged",
+    "pre-push": "pnpm run ci:local",
+    "pre-push:fast": "pnpm run validate:fast",
+    "prepare": "husky && echo '✅ Husky hooks configurados correctamente'"
   },
   "dependencies": {
     "@react-navigation/elements": "^2.6.2",
@@ -50,7 +61,9 @@
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "cz-customizable": "^7.5.1",
     "eslint": "^8.19.0",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
+    "lint-staged": "^16.2.3",
     "metro-react-native-babel-preset": "^0.77.0",
     "prettier": "2.8.8",
     "react-test-renderer": "19.0.0",
@@ -67,5 +80,14 @@
     "cz-customizable": {
       "config": "./.cz-config.js"
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yaml,yml}": [
+      "prettier --write"
+    ]
   }
 }

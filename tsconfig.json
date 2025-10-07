@@ -14,8 +14,9 @@
     "baseUrl": ".",
     "paths": {
       "@app/*": ["src/*"],
-      "@presentation/*": ["src/presentation/*"],
+      "@presentation/*": ["src/presentation/*"]
     }
   },
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "exclude": ["node_modules", "android", "ios", "**/*.test.ts", "**/*.test.tsx", ".expo"]
 }

@@ -37,7 +37,7 @@ class UserService {
     }
   }
 
-  public async update(user: UserDTO): Promise<Result<string, string>> {
+  public async update(_user: UserDTO): Promise<Result<string, string>> {
     const defaultErrorRequest: Result<string, string> = {
       ok: false,
       error: 'No se pudo actualizar el usuario',
