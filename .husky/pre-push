@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 echo "🚀 Husky: Ejecutando validaciones pre-push..."
 pnpm run validate:fast || {
     echo "❌ Validaciones fallidas. Push cancelado."
